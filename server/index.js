@@ -3,6 +3,10 @@ const mongo = require('./config/Mongo');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
+
+//routes
+const authRoutes = require('./routes/authRoutes');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -14,25 +18,27 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin:"http://localhost:3000",
-		credentials:true,
+		origin: "http://localhost:3000/",
+		credentials: true,
 	})
 )
 
 app.use(
 	fileUpload({
-		useTempFiles:true,
-		tempFileDir:"/temp",
+		useTempFiles: true,
+		tempFileDir: "/temp",
 	})
 )
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+	res.send('Hello World!');
 });
 
+app.use('/auth', authRoutes);
+
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-    console.log(process.env.ENV_TEXT);
-    console.log("Hello World!")
+	console.log(`Example app listening at http://localhost:${port}`);
+	console.log(process.env.ENV_TEXT);
+	console.log("Hello World!")
 });
 
