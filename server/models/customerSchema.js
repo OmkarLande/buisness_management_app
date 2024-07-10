@@ -1,13 +1,9 @@
 const mongoose = require('mongoose');
 
 const CustomerSchema = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
+    business: { type: mongoose.Schema.Types.ObjectId, ref: 'Business', required: true },
+    name: { type: String, required: true },
+    email: String,
     phone: String,
     address: {
         street: String,
@@ -15,14 +11,6 @@ const CustomerSchema = new mongoose.Schema({
         state: String,
         zipCode: String,
         country: String
-    },
-    loyaltyPoints: {
-        type: Number,
-        default: 0
-    },
-    joinDate: {
-        type: Date,
-        default: Date.now
     }
 });
 

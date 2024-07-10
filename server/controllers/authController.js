@@ -77,9 +77,10 @@ exports.login = async (req, res) => {
         const payload = {
             user: {
                 id: user.id,
-                role: user.role
+                role: user.role,
+                business: user.business
             }
-        };
+        };;
 
         //token options
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '3d' });
@@ -89,7 +90,7 @@ exports.login = async (req, res) => {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24 * 3 // 3 days
         });
-        res.json({ message: 'Logged in successfully' });
+        res.json({ message: 'Logged in successfully', role: user.role });
 
     } catch (error) {
         console.error(error);
